@@ -1,1 +1,3 @@
 # etch-a-sketch
+
+Hello everyone! Welcome to my fourth TOP project! This is my second JavaScript program and I am still demonstrating the same skills as before with the previous rendition of an old project, the UI-based rock papers scissors game. Here, I will be creating an Etch-a-Sketch program that should allow me to demonstrate all of the skills that I have learned up until this point in the curriculum, with a main focus on (what I imagine would be) CSS Layout and Flexbox and JavaScript DOM Manipulation. With that said, thank you everyone for viewing this project and for stopping by this repo!
