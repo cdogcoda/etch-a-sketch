@@ -17,6 +17,9 @@ for (let i = 0; i < 16; i++) {
     for (let j = 0; j < 16; j++) {
         const gridSquare = document.createElement("div");
         gridSquare.style.cssText = "flex: 1 0 0; border: 1px solid black";
+        gridSquare.addEventListener("mouseover", function() {
+            gridSquare.classList.add("mouseover");
+        })
         gridSquaresRowContainer.appendChild(gridSquare);
     }
     gridContainer.appendChild(gridSquaresRowContainer);
