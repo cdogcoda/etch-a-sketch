@@ -7,3 +7,17 @@
 // Create a popup that allows users to enter a number for which a new grid with those dimensions can be generated
 // -> Gives user opportunities to create new grids and drawings
 
+const gridContainer = document.querySelector(".container");
+gridContainer.style.cssText = "width: 960px; height: 960px; border: 2px solid black; margin: 0 auto; display: flex; flex-flow: column wrap";
+
+
+for (let i = 0; i < 16; i++) {
+    const gridSquaresRowContainer = document.createElement("div");
+    gridSquaresRowContainer.style.cssText = "display: flex; flex: 1 0 0"
+    for (let j = 0; j < 16; j++) {
+        const gridSquare = document.createElement("div");
+        gridSquare.style.cssText = "flex: 1 0 0; border: 1px solid black";
+        gridSquaresRowContainer.appendChild(gridSquare);
+    }
+    gridContainer.appendChild(gridSquaresRowContainer);
+}
