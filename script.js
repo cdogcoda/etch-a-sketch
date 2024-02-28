@@ -11,8 +11,12 @@ const gridContainer = document.querySelector(".container");
 gridContainer.style.cssText = "width: 960px; height: 960px; border: 2px solid black; margin: 0 auto; display: flex; flex-flow: column wrap";
 const gridDimensionsButton = document.createElement("button");
 gridDimensionsButton.textContent = "Click Me!";
-gridDimensionsButton.style.cssText = "padding: 8px 16px; font-size: 24px; border-radius: 8px; margin-bottom: 16px;"
+gridDimensionsButton.style.cssText = "padding: 8px 16px; font-size: 24px; border-radius: 8px; margin-bottom: 16px;";
 document.body.insertBefore(gridDimensionsButton, gridContainer);
+const gridResetButton = document.createElement("button");
+gridResetButton.textContent = "Reset Grid";
+gridResetButton.style.cssText = "padding: 8px 16px; font-size: 24px; border-radius: 8px; margin-bottom: 16px; margin-left: 16px";
+document.body.insertBefore(gridResetButton, gridContainer);
 
 gridDimensionsButton.addEventListener("click", function() {
     let numberChoice;
@@ -23,6 +27,13 @@ gridDimensionsButton.addEventListener("click", function() {
         gridContainer.removeChild(gridContainer.lastChild);
     }
     generateGrid(numberChoice);
+})
+
+gridResetButton.addEventListener("click", function() {
+    let hoveredSquares = document.querySelectorAll(".mouseover");
+    for (const hoveredSquare of hoveredSquares) {
+        hoveredSquare.classList.remove("mouseover");
+    }
 })
 
 function generateGrid(number) {
