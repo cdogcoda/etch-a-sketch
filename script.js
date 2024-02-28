@@ -9,18 +9,34 @@
 
 const gridContainer = document.querySelector(".container");
 gridContainer.style.cssText = "width: 960px; height: 960px; border: 2px solid black; margin: 0 auto; display: flex; flex-flow: column wrap";
+const gridDimensionsButton = document.createElement("button");
+gridDimensionsButton.textContent = "Click Me!";
+gridDimensionsButton.style.cssText = "padding: 8px 16px; font-size: 24px; border-radius: 8px; margin-bottom: 16px;"
+document.body.insertBefore(gridDimensionsButton, gridContainer);
 
-
-for (let i = 0; i < 16; i++) {
-    const gridSquaresRowContainer = document.createElement("div");
-    gridSquaresRowContainer.style.cssText = "display: flex; flex: 1 0 0"
-    for (let j = 0; j < 16; j++) {
-        const gridSquare = document.createElement("div");
-        gridSquare.style.cssText = "flex: 1 0 0; border: 1px solid black";
-        gridSquare.addEventListener("mouseover", function() {
-            gridSquare.classList.add("mouseover");
-        })
-        gridSquaresRowContainer.appendChild(gridSquare);
+gridDimensionsButton.addEventListener("click", function() {
+    let numberChoice;
+    while (!(Number.isInteger(numberChoice)) || (+numberChoice > 100)) {
+        numberChoice = +prompt("Number: ");
     }
-    gridContainer.appendChild(gridSquaresRowContainer);
+    while (gridContainer.firstChild) {
+        gridContainer.removeChild(gridContainer.lastChild);
+    }
+    generateGrid(numberChoice);
+})
+
+function generateGrid(number) {
+    for (let i = 0; i < number; i++) {
+        const gridSquaresRowContainer = document.createElement("div");
+        gridSquaresRowContainer.style.cssText = "display: flex; flex: 1 0 0"
+        for (let j = 0; j < number; j++) {
+            const gridSquare = document.createElement("div");
+            gridSquare.style.cssText = "flex: 1 0 0; border: 1px solid black";
+            gridSquare.addEventListener("mouseover", function() {
+                gridSquare.classList.add("mouseover");
+            })
+            gridSquaresRowContainer.appendChild(gridSquare);
+        }
+        gridContainer.appendChild(gridSquaresRowContainer);
+    }
 }
