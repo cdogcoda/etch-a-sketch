@@ -31,6 +31,10 @@ const gridSquareColorFillRandomizerButton = document.createElement("button");
 gridSquareColorFillRandomizerButton.textContent = "Randomize Fill!";
 gridSquareColorFillRandomizerButton.style.cssText = "padding: 8px 16px; font-size: 24px; border-radius: 8px; margin-bottom: 16px; margin-left: 16px";
 document.body.insertBefore(gridSquareColorFillRandomizerButton, gridContainer);
+const gridSquareRainbowColorButton = document.createElement("button");
+gridSquareRainbowColorButton.textContent = "Rainbow!";
+gridSquareRainbowColorButton.style.cssText = "padding: 8px 16px; font-size: 24px; border-radius: 8px; margin-bottom: 16px; margin-left: 16px";
+document.body.insertBefore(gridSquareRainbowColorButton, gridContainer);
 
 gridDimensionsButton.addEventListener("click", function() {
     let numberChoice;
@@ -59,7 +63,16 @@ gridSquareColorFillRandomizerButton.addEventListener("click", function() {
     let randomRValue = Math.floor(Math.random()*256);
     let randomGValue = Math.floor(Math.random()*256);
     let randomBValue = Math.floor(Math.random()*256);
-    generateGrid(globalNumberChoice, `rgb(${randomRValue}, ${randomGValue}, ${randomBValue})`);
+    generateGrid(globalNumberChoice);
+    assignFillColor(`rgb(${randomRValue}, ${randomGValue}, ${randomBValue})`);
+})
+
+gridSquareRainbowColorButton.addEventListener("click", function() {
+    while (gridContainer.firstChild) {
+        gridContainer.removeChild(gridContainer.lastChild);
+    }
+    generateGrid(globalNumberChoice);
+    assignFillColor("rainbow", true);
 })
 
 function generateGrid(number) {
@@ -76,11 +89,22 @@ function generateGrid(number) {
     }
 }
 
-function assignFillColor(fillColor) {
+function assignFillColor(fillColor, condition) {
     let gridSquares = document.querySelectorAll(".square-identifier");
-    for (const gridSquare of gridSquares) {
-        gridSquare.addEventListener("mouseover", function() {
-            gridSquare.style.cssText = gridSquareDefaultStyling + `background-color: ${fillColor}`;
-        })
-    }
+    if (condition) {
+        for (const gridSquare of gridSquares) {
+            let randomRValue = Math.floor(Math.random()*256);
+            let randomGValue = Math.floor(Math.random()*256);
+            let randomBValue = Math.floor(Math.random()*256);
+            gridSquare.addEventListener("mouseover", function() {
+                gridSquare.style.cssText = gridSquareDefaultStyling + `background-color: rgb(${randomRValue}, ${randomGValue}, ${randomBValue})`;
+            })
+        }
+    } else {
+        for (const gridSquare of gridSquares) {
+            gridSquare.addEventListener("mouseover", function() {
+                gridSquare.style.cssText = gridSquareDefaultStyling + `background-color: ${fillColor}`;
+            })
+        }
+    } 
 }
