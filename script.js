@@ -7,6 +7,14 @@
 // Create a popup that allows users to enter a number for which a new grid with those dimensions can be generated
 // -> Gives user opportunities to create new grids and drawings
 
+// My extended pseudocode
+
+// Create a button feature to give each hover fill a random fill color
+// -> Said another way, every time a square is hovered over there is a new color
+// Refactor function generateGrid to only generate the grid
+// -> Have a function call to another function that sets the default color fill (black)
+// -> Use that function to set the hover fill of each square to a new color(?)
+
 let globalNumberChoice;
 const gridSquareDefaultStyling = "flex: 1 0 0; border: 1px solid black;";
 const gridContainer = document.querySelector(".container");
@@ -33,7 +41,8 @@ gridDimensionsButton.addEventListener("click", function() {
     while (gridContainer.firstChild) {
         gridContainer.removeChild(gridContainer.lastChild);
     }
-    generateGrid(numberChoice, "black");
+    generateGrid(numberChoice);
+    assignFillColor("black");
 })
 
 gridResetButton.addEventListener("click", function() {
@@ -53,19 +62,25 @@ gridSquareColorFillRandomizerButton.addEventListener("click", function() {
     generateGrid(globalNumberChoice, `rgb(${randomRValue}, ${randomGValue}, ${randomBValue})`);
 })
 
-function generateGrid(number, fillColor) {
+function generateGrid(number) {
     for (let i = 0; i < number; i++) {
         const gridSquaresRowContainer = document.createElement("div");
         gridSquaresRowContainer.style.cssText = "display: flex; flex: 1 0 0"
         for (let j = 0; j < number; j++) {
             const gridSquare = document.createElement("div");
             gridSquare.style.cssText = gridSquareDefaultStyling;
-            gridSquare.addEventListener("mouseover", function() {
-                gridSquare.classList.add("square-identifier");
-                gridSquare.style.cssText = gridSquareDefaultStyling + `background-color: ${fillColor};`;
-            })
+            gridSquare.classList.add("square-identifier");
             gridSquaresRowContainer.appendChild(gridSquare);
         }
         gridContainer.appendChild(gridSquaresRowContainer);
+    }
+}
+
+function assignFillColor(fillColor) {
+    let gridSquares = document.querySelectorAll(".square-identifier");
+    for (const gridSquare of gridSquares) {
+        gridSquare.addEventListener("mouseover", function() {
+            gridSquare.style.cssText = gridSquareDefaultStyling + `background-color: ${fillColor}`;
+        })
     }
 }
