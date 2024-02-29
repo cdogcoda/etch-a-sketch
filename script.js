@@ -7,6 +7,7 @@
 // Create a popup that allows users to enter a number for which a new grid with those dimensions can be generated
 // -> Gives user opportunities to create new grids and drawings
 
+const gridSquareDefaultStyling = "flex: 1 0 0; border: 1px solid black;";
 const gridContainer = document.querySelector(".container");
 gridContainer.style.cssText = "width: 960px; height: 960px; border: 2px solid black; margin: 0 auto; display: flex; flex-flow: column wrap";
 const gridDimensionsButton = document.createElement("button");
@@ -30,9 +31,9 @@ gridDimensionsButton.addEventListener("click", function() {
 })
 
 gridResetButton.addEventListener("click", function() {
-    let hoveredSquares = document.querySelectorAll(".mouseover");
+    let hoveredSquares = document.querySelectorAll(".square-identifier");
     for (const hoveredSquare of hoveredSquares) {
-        hoveredSquare.classList.remove("mouseover");
+        hoveredSquare.style.cssText = gridSquareDefaultStyling;
     }
 })
 
@@ -42,9 +43,10 @@ function generateGrid(number) {
         gridSquaresRowContainer.style.cssText = "display: flex; flex: 1 0 0"
         for (let j = 0; j < number; j++) {
             const gridSquare = document.createElement("div");
-            gridSquare.style.cssText = "flex: 1 0 0; border: 1px solid black";
+            gridSquare.style.cssText = gridSquareDefaultStyling;
             gridSquare.addEventListener("mouseover", function() {
-                gridSquare.classList.add("mouseover");
+                gridSquare.classList.add("square-identifier");
+                gridSquare.style.cssText = gridSquareDefaultStyling + "background-color: black;";
             })
             gridSquaresRowContainer.appendChild(gridSquare);
         }
