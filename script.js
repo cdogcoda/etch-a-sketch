@@ -16,7 +16,8 @@
 // -> Use that function to set the hover fill of each square to a new color(?)
 
 let globalNumberChoice;
-const gridSquareDefaultStyling = "flex: 1 0 0; border: 1px solid black;";
+let darknessOpacity = 0;
+const gridSquareDefaultStyling = "flex: 1 0 0px; border: 1px solid black;";
 const gridContainer = document.querySelector(".container");
 gridContainer.style.cssText = "width: 960px; height: 960px; border: 2px solid black; margin: 0 auto; display: flex; flex-flow: column wrap";
 const gridDimensionsButton = document.createElement("button");
@@ -35,6 +36,10 @@ const gridSquareRainbowColorButton = document.createElement("button");
 gridSquareRainbowColorButton.textContent = "Rainbow!";
 gridSquareRainbowColorButton.style.cssText = "padding: 8px 16px; font-size: 24px; border-radius: 8px; margin-bottom: 16px; margin-left: 16px";
 document.body.insertBefore(gridSquareRainbowColorButton, gridContainer);
+const gridSquareDarkeningFillButton = document.createElement("button");
+gridSquareDarkeningFillButton.textContent = "Darkening Fill";
+gridSquareDarkeningFillButton.style.cssText = "padding: 8px 16px; font-size: 24px; border-radius: 8px; margin-bottom: 16px; margin-left: 16px";
+document.body.insertBefore(gridSquareDarkeningFillButton, gridContainer);
 
 gridDimensionsButton.addEventListener("click", function() {
     let numberChoice;
@@ -50,6 +55,7 @@ gridDimensionsButton.addEventListener("click", function() {
 })
 
 gridResetButton.addEventListener("click", function() {
+    darknessOpacity = 0;
     let hoveredSquares = document.querySelectorAll(".square-identifier");
     for (const hoveredSquare of hoveredSquares) {
         hoveredSquare.style.cssText = gridSquareDefaultStyling;
@@ -72,7 +78,15 @@ gridSquareRainbowColorButton.addEventListener("click", function() {
         gridContainer.removeChild(gridContainer.lastChild);
     }
     generateGrid(globalNumberChoice);
-    assignFillColor("rainbow", true);
+    assignFillColor("rainbow", "RGB");
+})
+
+gridSquareDarkeningFillButton.addEventListener("click", function() {
+    while (gridContainer.firstChild) {
+        gridContainer.removeChild(gridContainer.lastChild);
+    }
+    generateGrid(globalNumberChoice);
+    assignFillColor("darken", "Darkening");
 })
 
 function generateGrid(number) {
@@ -91,7 +105,7 @@ function generateGrid(number) {
 
 function assignFillColor(fillColor, condition) {
     let gridSquares = document.querySelectorAll(".square-identifier");
-    if (condition) {
+    if (condition == "RGB") {
         for (const gridSquare of gridSquares) {
             let randomRValue = Math.floor(Math.random()*256);
             let randomGValue = Math.floor(Math.random()*256);
@@ -100,6 +114,15 @@ function assignFillColor(fillColor, condition) {
                 gridSquare.style.cssText = gridSquareDefaultStyling + `background-color: rgb(${randomRValue}, ${randomGValue}, ${randomBValue})`;
             })
         }
+    } else if (condition == "Darkening") {
+        darknessOpacity = 0;
+        gridContainer.addEventListener("mouseover", function(e) {
+            let hoveredSquare = e.target;
+            if (hoveredSquare.style.cssText == gridSquareDefaultStyling) {
+                hoveredSquare.style.cssText = gridSquareDefaultStyling + `background-color: rgba(0,0,0,${darknessOpacity})`;
+                darknessOpacity += .01;
+            }
+        })
     } else {
         for (const gridSquare of gridSquares) {
             gridSquare.addEventListener("mouseover", function() {
